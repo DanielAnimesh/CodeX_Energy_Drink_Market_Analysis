@@ -67,8 +67,7 @@ CREATE TABLE fact_survey_responses (
     Typical_consumption_situations TEXT,  
     FOREIGN KEY (Respondent_ID) REFERENCES dim_respondents(Respondent_ID) ON DELETE CASCADE
 );
-
----
+```
 
 ## 🧹 Data Cleaning
 
