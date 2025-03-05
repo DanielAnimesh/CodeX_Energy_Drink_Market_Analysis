@@ -1,4 +1,20 @@
-# Energy Drink Market Analysis
+# 📊 Energy Drink Consumer Analysis - SQL Project
+
+## 📌 Project Overview
+
+This project analyzes consumer preferences, marketing effectiveness, and brand perception in the energy drink market using SQL. The dataset contains survey responses related to brand awareness, purchasing behavior, and product preferences.
+
+---
+
+## 🗄️ Dataset
+
+The dataset consists of three tables:
+
+1. **dim\_respondents** - Contains demographic details of respondents.
+2. **dim\_cities** - Includes information about cities and their tiers.
+3. **fact\_survey\_responses** - Stores responses to survey questions.
+
+---
 
 ## Data Cleaning
 
