@@ -70,6 +70,7 @@ CREATE TABLE fact_survey_responses (
 ```
 
 ## 🧹 Data Cleaning
+Before analysis, we performed the following data-cleaning steps:
 
 ### 🔍 Checking for Duplicates
 
@@ -79,6 +80,7 @@ FROM dim_respondents
 GROUP BY Respondent_ID
 HAVING COUNT(*) > 1;
 ```
+**Insight:** No duplicate Respondent_IDs were found.
 
 ### 🛠 Handling NULL Values
 
@@ -89,16 +91,8 @@ SELECT
     SUM(CASE WHEN Tier IS NULL THEN 1 ELSE 0 END) AS Null_Tier
 FROM dim_cities;
 ```
+**Insight:** No null values in `City_ID`
 
-```sql
-SELECT 
-    SUM(CASE WHEN Respondent_ID IS NULL THEN 1 ELSE 0 END) AS Null_Respondent_ID,
-    SUM(CASE WHEN Name IS NULL THEN 1 ELSE 0 END) AS Null_Name,
-    SUM(CASE WHEN Age IS NULL THEN 1 ELSE 0 END) AS Null_Age,
-    SUM(CASE WHEN Gender IS NULL THEN 1 ELSE 0 END) AS Null_Gender,
-    SUM(CASE WHEN City_ID IS NULL THEN 1 ELSE 0 END) AS Null_City_ID
-FROM dim_respondents;
-```
 
 ### 🤔 Sense Check for Logical Consistency
 
