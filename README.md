@@ -176,6 +176,47 @@ GROUP BY Price_range;
 
 ---
 
+### 🚀 **Product Development**  
+
+#### Which area of business should we focus on for product development? (Branding, Taste, Availability)  
+
+```sql
+SELECT 
+    Brand_perception,
+    COUNT(Response_ID) AS Count,
+    ROUND(100 * COUNT(Response_ID) / SUM(COUNT(Response_ID)) OVER(), 2) AS Percentage
+FROM fact_survey_responses
+GROUP BY Brand_perception
+ORDER BY Count DESC;
+```  
+
+```sql
+SELECT 
+    Taste_experience,
+    COUNT(Response_ID) AS Count,
+    ROUND(100 * COUNT(Response_ID) / SUM(COUNT(Response_ID)) OVER(), 2) AS Percentage
+FROM fact_survey_responses
+WHERE Taste_experience IS NOT NULL
+GROUP BY Taste_experience
+ORDER BY Count DESC;
+```  
+
+```sql
+SELECT 
+    Reasons_for_choosing_brands,
+    COUNT(Response_ID) AS Count,
+    ROUND(100 * COUNT(Response_ID) / SUM(COUNT(Response_ID)) OVER(), 2) AS Percentage
+FROM fact_survey_responses
+GROUP BY Reasons_for_choosing_brands
+ORDER BY Count DESC;
+```  
+
+**Insights:**  
+- A significant portion of respondents have **neutral or negative brand perception**, indicating room for **stronger branding strategies**.  
+- **Taste experience plays a crucial role** in consumer satisfaction—enhancing flavor profiles can improve brand loyalty.  
+- The most common **reasons for choosing competitor brands** include brand reputation, taste, and availability.  
+- **Actionable strategy:** Focus on **brand positioning, product taste improvements, and increased distribution channels** to capture market share.
+
 ## Secondary Insights 
 
 
