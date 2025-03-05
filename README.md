@@ -175,7 +175,7 @@ Compact and portable cans (3984) are the most preferred, followed by innovative 
 
 ---
 
-### 🏆 **Competition Analysis**
+### 📈 **Competition Analysis**
 
 #### Who are the current market leaders?
 
@@ -208,6 +208,8 @@ ORDER BY Count DESC;
 Brand reputation is the dominant factor influencing consumer choices (Cola-Coka: 616, Bepsi: 577, Gangster: 511). Enhancing CodeX's reputation through branding and quality improvements is crucial to gaining market share.
 
 ---
+
+### 📢 **Marketing & Brand Awareness**
 
 #### Which marketing channel can be used to reach more customers?
 
@@ -314,7 +316,7 @@ ORDER BY Count DESC;
 Taste ratings are mixed, with 29.87% rating it a 3/5. Improving flavor profiles based on consumer preferences could enhance customer loyalty.
 ---
 
-## Secondary Insights 
+## 🌟 Secondary Insights 
 
 ### Recommendations for CodeX:
 1. **Improve Product Formula:** Consumers prefer caffeine and vitamins in energy drinks. CodeX should emphasize these ingredients in its branding.
