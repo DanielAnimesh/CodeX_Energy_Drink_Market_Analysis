@@ -339,5 +339,5 @@ This project provides actionable insights on consumer preferences, marketing eff
 ## 🔗 Connect
 
 - **Author**: Animesh Daniel
-- **LinkedIn**: [[Your Profile]](https://www.linkedin.com/posts/animesh-daniel-2b85b9b0_github-danielanimeshcodexenergydrinkmarketanalysis-activity-7303009742975569920-6tQE?utm_source=share&utm_medium=member_desktop&rcm=ACoAABeU9WwBp0IVD1ADo9ZfPH8pksv4cS9e_p4)
-- **GitHub**: [[Your Repository]](https://github.com/DanielAnimesh/CodeX_Energy_Drink_Market_Analysis.git)
+- **LinkedIn**: [[My Profile]](https://www.linkedin.com/posts/animesh-daniel-2b85b9b0_github-danielanimeshcodexenergydrinkmarketanalysis-activity-7303009742975569920-6tQE?utm_source=share&utm_medium=member_desktop&rcm=ACoAABeU9WwBp0IVD1ADo9ZfPH8pksv4cS9e_p4)
+- **GitHub**: [[Repository]](https://github.com/DanielAnimesh/CodeX_Energy_Drink_Market_Analysis.git)
