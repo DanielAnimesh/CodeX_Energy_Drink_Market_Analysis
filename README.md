@@ -17,116 +17,90 @@ The dataset consists of three tables:
 ---
 
 ## Data Cleaning
+Before analysis, we performed the following data-cleaning steps:
 
-### Check for Duplicate Respondents
+### Checking for Duplicates
 ```sql
-SELECT Respondent_ID, COUNT(*)
+SELECT Respondent_ID, COUNT(*) 
 FROM dim_respondents
 GROUP BY Respondent_ID
 HAVING COUNT(*) > 1;
 ```
-**Insight:** Ensuring there are no duplicate respondents in the dataset.
+**Insight:** No duplicate Respondent_IDs were found.
 
-### Check for Missing Data in `dim_cities`
+### Identifying Missing Values
 ```sql
-SELECT
+SELECT 
     SUM(CASE WHEN City_ID IS NULL THEN 1 ELSE 0 END) AS Null_City_ID,
     SUM(CASE WHEN City IS NULL THEN 1 ELSE 0 END) AS Null_City,
     SUM(CASE WHEN Tier IS NULL THEN 1 ELSE 0 END) AS Null_Tier
 FROM dim_cities;
 ```
-**Insight:** Identifying missing values in city-related information.
+**Insight:** A few missing values in `City_ID`, but they were handled appropriately.
 
-### Check for Missing Data in `dim_respondents`
-```sql
-SELECT
-    SUM(CASE WHEN Respondent_ID IS NULL THEN 1 ELSE 0 END) AS Null_Respondent_ID,
-    SUM(CASE WHEN Name IS NULL THEN 1 ELSE 0 END) AS Null_Name,
-    SUM(CASE WHEN Age IS NULL THEN 1 ELSE 0 END) AS Null_Age,
-    SUM(CASE WHEN Gender IS NULL THEN 1 ELSE 0 END) AS Null_Gender,
-    SUM(CASE WHEN City_ID IS NULL THEN 1 ELSE 0 END) AS Null_City_ID
-FROM dim_respondents;
-```
-**Insight:** Ensuring no missing demographic data.
-
-### Sense Check - Taste Experience
-```sql
-SELECT *
-FROM fact_survey_responses
-WHERE Heard_before = 'No'
-  AND Tried_before = 'No'
-  AND Taste_experience IS NOT NULL;
-```
+### Sense Check
+Ensured logical consistency by verifying responses for cases where consumers claimed they never heard or tried the product but still provided a taste experience rating.
 ```sql
 UPDATE fact_survey_responses
 SET Taste_experience = NULL
-WHERE Heard_before = 'No'
+WHERE Heard_before = 'No' 
   AND Tried_before = 'No';
 ```
-**Insight:** Removing inconsistent taste experience ratings from respondents who haven't tried the drink.
 
 ---
 
-## Demographics Insights
+## Demographic Insights
 
 ### Who prefers energy drinks more? (Male/Female/Non-binary)
 ```sql
-SELECT Gender, COUNT(Gender) as Count
-FROM dim_respondents
-GROUP BY Gender
+SELECT Gender, COUNT(*) AS Count 
+FROM dim_respondents 
+GROUP BY Gender 
 ORDER BY Count DESC;
 ```
-**Insight:**
-- Male: **6038**
-- Female: **3455**
-- Non-binary: **507**
-- Males are the largest consumer group.
+**Insight:** Males (6038) are the largest consumer group, followed by females (3455) and non-binary respondents (507).
 
 ### Which age group prefers energy drinks more?
 ```sql
-SELECT Age, COUNT(Age) as Count
-FROM dim_respondents
-GROUP BY Age
+SELECT Age, COUNT(*) AS Count 
+FROM dim_respondents 
+GROUP BY Age 
 ORDER BY Count DESC;
 ```
-**Insight:**
-- The **19-30** age group prefers energy drinks the most (**5520 respondents**).
+**Insight:** The 19-30 age group (5520) is the biggest consumer segment, followed by 31-45 (2376) and 15-18 (1488).
 
-### Which type of marketing reaches the most youth (15-30)?
+### Which type of marketing reaches the most Youth (15-30)?
 ```sql
-SELECT Marketing_channels, COUNT(*) as Youth_Count
+SELECT Marketing_channels, COUNT(*) AS Youth_Count
 FROM fact_survey_responses frs
 JOIN dim_respondents dr ON dr.Respondent_ID = frs.Respondent_ID
 WHERE dr.Age BETWEEN 15 AND 30
 GROUP BY Marketing_channels
 ORDER BY Youth_Count DESC;
 ```
-**Insight:**
-- **Online ads** reach the most youth (**3373 respondents**).
+**Insight:** Online ads (3373) are the most effective marketing channel for the youth segment.
 
 ---
 
 ## Consumer Preferences
 
-### What are the preferred ingredients of energy drinks among respondents?
+### What are the preferred ingredients of energy drinks?
 ```sql
-SELECT Ingredients_expected, COUNT(Response_ID) as Count
+SELECT Ingredients_expected, COUNT(Response_ID) AS Count
 FROM fact_survey_responses
 GROUP BY Ingredients_expected
 ORDER BY Count DESC;
 ```
-**Insight:**
-- **Caffeine** is the most preferred ingredient (**3896 respondents**).
+**Insight:** Caffeine (3896) and vitamins (2534) are the most preferred ingredients.
 
 ### What packaging preferences do respondents have?
 ```sql
-SELECT Packaging_preference, COUNT(Response_ID) as Count
+SELECT Packaging_preference, COUNT(Response_ID) AS Count
 FROM fact_survey_responses
 GROUP BY Packaging_preference
 ORDER BY Count DESC;
 ```
-**Insight:**
-- **Compact and portable cans** are the most preferred (**3984 respondents**).
+**Insight:** Compact and portable cans (3984) are the top choice.
 
 ---
 
@@ -134,19 +108,18 @@ ORDER BY Count DESC;
 
 ### Who are the current market leaders?
 ```sql
-SELECT Current_brands, COUNT(Response_ID) as Count
+SELECT Current_brands, COUNT(Response_ID) AS Count
 FROM fact_survey_responses
 GROUP BY Current_brands
 ORDER BY Count DESC;
 ```
-**Insight:**
-- **Cola-Coka** is the market leader (**2538 respondents**).
+**Insight:** Cola-Coka (2538) and Bepsi (2112) are the top competitors.
 
 ### What are the primary reasons consumers prefer those brands over ours?
 ```sql
 WITH RankedReasons AS (
     SELECT Current_brands, Reasons_for_choosing_brands, COUNT(Response_ID) AS Count,
-    ROW_NUMBER() OVER (PARTITION BY Current_brands ORDER BY COUNT(Response_ID) DESC) AS RankedNum
+           ROW_NUMBER() OVER (PARTITION BY Current_brands ORDER BY COUNT(Response_ID) DESC) AS RankedNum
     FROM fact_survey_responses
     WHERE Current_brands != 'CodeX'
     GROUP BY Current_brands, Reasons_for_choosing_brands
@@ -156,8 +129,7 @@ FROM RankedReasons
 WHERE RankedNum = 1
 ORDER BY Count DESC;
 ```
-**Insight:**
-- **Brand reputation** is the top reason for preference across brands.
+**Insight:** Brand reputation is the top reason why consumers prefer competitors.
 
 ---
 
@@ -165,23 +137,21 @@ ORDER BY Count DESC;
 
 ### Which marketing channel can be used to reach more customers?
 ```sql
-SELECT Marketing_channels, COUNT(Response_ID) as Count
+SELECT Marketing_channels, COUNT(Response_ID) AS Count
 FROM fact_survey_responses
 GROUP BY Marketing_channels
 ORDER BY Count DESC;
 ```
-**Insight:**
-- **Online ads** have the highest reach (**4020 respondents**).
+**Insight:** Online ads (4020) have the highest reach potential.
 
 ### What do people think about our brand?
 ```sql
 SELECT Brand_perception, COUNT(*) AS Count
 FROM fact_survey_responses
 GROUP BY Brand_perception
-ORDER BY Count DESC LIMIT 1;
+ORDER BY Count DESC;
 ```
-**Insight:**
-- The majority have a **Neutral** perception (**5974 respondents**).
+**Insight:** Most respondents (5974) have a neutral perception of CodeX.
 
 ---
 
@@ -189,60 +159,36 @@ ORDER BY Count DESC LIMIT 1;
 
 ### Where do respondents prefer to purchase energy drinks?
 ```sql
-SELECT Purchase_location, COUNT(Response_ID) as Count
+SELECT Purchase_location, COUNT(Response_ID) AS Count
 FROM fact_survey_responses
 GROUP BY Purchase_location
 ORDER BY Count DESC;
 ```
-**Insight:**
-- **Supermarkets** are the most preferred location (**4494 respondents**).
+**Insight:** Supermarkets (4494) and online retailers (2550) are the preferred purchase locations.
 
-### What factors influence respondents' purchase decisions?
+### What factors influence purchase decisions (price & limited edition packaging)?
 ```sql
-SELECT Price_range, COUNT(Response_ID) AS Response_Count,
-ROUND(100 * COUNT(Response_ID) / SUM(COUNT(Response_ID)) OVER(), 2) AS Percentage
+SELECT Price_range, COUNT(Response_ID) AS Count, ROUND(100 * COUNT(Response_ID) / SUM(COUNT(Response_ID)) OVER(), 2) AS Percentage
 FROM fact_survey_responses
-GROUP BY Price_range
-ORDER BY Response_Count DESC;
+GROUP BY Price_range;
 ```
-**Insight:**
-- **40.23% of respondents are price-sensitive**.
+**Insight:** Price sensitivity is a significant factor in consumer decisions.
 
 ---
 
-## Product Development
+## Secondary Insights (Sample Sections / Questions)
 
-### Which area should we focus on for product development?
-```sql
-SELECT Brand_perception, COUNT(Response_ID) AS Count,
-ROUND(100 * COUNT(Response_ID) / SUM(COUNT(Response_ID)) OVER(), 2) AS Percentage
-FROM fact_survey_responses
-GROUP BY Brand_perception
-ORDER BY Count DESC;
-```
-**Insight:**
-- **59.74% of respondents are neutral** towards the brand.
+**Note:** Additional market research is required.
 
-### Taste Experience Ratings
-```sql
-SELECT Taste_experience, COUNT(Response_ID) AS Count,
-ROUND(100 * COUNT(Response_ID) / SUM(COUNT(Response_ID)) OVER(), 2) AS Percentage
-FROM fact_survey_responses
-WHERE Taste_experience IS NOT NULL
-GROUP BY Taste_experience
-ORDER BY Count DESC;
-```
-**Insight:**
-- **Majority rate taste as 3/5** (**29.87% respondents**), suggesting room for improvement.
+### Recommendations for CodeX:
+1. **Improve Product Formula:** Consumers prefer caffeine and vitamins in energy drinks. CodeX should emphasize these ingredients in its branding.
+2. **Adjust Pricing Strategy:** Since price is a key decision factor, CodeX should offer a mid-tier price similar to competitors while providing occasional discounts.
+3. **Leverage Digital Marketing:** With online ads being the most effective channel, CodeX should prioritize social media campaigns, influencer collaborations, and targeted ads.
+4. **Identify Brand Ambassadors:** Given the youth audience, partnering with fitness influencers, athletes, or eSports gamers could enhance brand visibility.
+5. **Expand Distribution Channels:** Consumers prefer buying from supermarkets and online stores. Ensuring strong availability in these channels can drive sales growth.
 
 ---
 
 ## Conclusion
-This project provides key insights into consumer demographics, preferences, competition, and marketing effectiveness. The recommendations can be used to optimize branding, product development, and targeted marketing campaigns.
-
-🚀 **Next Steps:**
-- Improve brand perception through strategic marketing.
-- Innovate in taste and packaging.
-- Focus on online marketing channels.
-- Expand in Tier 1 cities like **Bangalore and Hyderabad**.
+The analysis highlights key consumer behaviors, brand perception, and marketing insights that can help CodeX refine its strategies to gain a competitive edge in the energy drink market.
 
