@@ -1,4 +1,4 @@
-https://i.postimg.cc/sDpdNWNR/freepik-the-style-is-candid-image-photography-with-natural-59745.jpg
+[![freepik-the-style-is-candid-image-photography-with-natural-59745.jpg](https://i.postimg.cc/sDpdNWNR/freepik-the-style-is-candid-image-photography-with-natural-59745.jpg)](https://postimg.cc/KRvHK1b9)
 
 
 # 📊 Energy Drink Consumer Analysis - SQL Project
