@@ -126,6 +126,8 @@ FROM dim_respondents
 GROUP BY Gender
 ORDER BY Count DESC;
 ```
+**Insight:**
+Energy drinks are significantly more popular among males (6038 respondents), followed by females (3455) and non-binary individuals (507). Marketing campaigns should prioritize engaging male audiences while exploring strategies to increase appeal among female and non-binary consumers.
 
 #### Which age group prefers energy drinks more?
 
@@ -135,6 +137,8 @@ FROM dim_respondents
 GROUP BY Age
 ORDER BY Count DESC;
 ```
+**Insight:**
+The highest consumption is observed in the 19-30 age group (5520 respondents), followed by 31-45 (2376) and 15-18 (1488). This suggests that marketing should target young professionals and students, with a secondary focus on middle-aged consumers.
 
 #### Which type of marketing reaches the most youth (15-30)?
 
@@ -146,6 +150,8 @@ WHERE dr.Age BETWEEN 15 AND 30
 GROUP BY Marketing_channels
 ORDER BY Youth_Count DESC;
 ```
+**Insight:**
+Online ads (3373) and TV commercials (1785) are the most effective channels for reaching younger audiences. Brands should prioritize digital advertising while maintaining TV presence to maximize engagement.
 
 ---
 
@@ -159,6 +165,8 @@ FROM fact_survey_responses
 GROUP BY Ingredients_expected
 ORDER BY Count DESC;
 ```
+**Insight:**
+Caffeine (3896) is the most sought-after ingredient, followed by vitamins (2534) and sugar (2017). This suggests that consumers prioritize energy-boosting components, so product formulations should emphasize these while offering low-sugar alternatives.
 
 #### What packaging preferences do respondents have?
 
@@ -168,10 +176,12 @@ FROM fact_survey_responses
 GROUP BY Packaging_preference
 ORDER BY Count DESC;
 ```
+**Insight:**
+Compact and portable cans (3984) are the most preferred, followed by innovative bottle designs (3047). Limited-edition or collectible packaging (1501) also has appeal. A mix of standard and special-edition packaging may enhance brand engagement.
 
 ---
 
-### 📈 **Competition Analysis**
+### \ud83d\udcc8 **Competition Analysis**
 
 #### Who are the current market leaders?
 
@@ -181,6 +191,8 @@ FROM fact_survey_responses
 GROUP BY Current_brands
 ORDER BY Count DESC;
 ```
+**Insight:**
+Cola-Coka (2538), Bepsi (2112), and Gangster (1854) are leading brands, indicating strong consumer loyalty. Competing effectively may require differentiation through taste, branding, and targeted promotions.
 
 #### What are the primary reasons consumers prefer those brands over ours?
 
@@ -198,10 +210,10 @@ FROM RankedReasons
 WHERE RankedNum = 1
 ORDER BY Count DESC;
 ```
+**Insight:**
+Brand reputation is the dominant factor influencing consumer choices (Cola-Coka: 616, Bepsi: 577, Gangster: 511). Enhancing CodeX's reputation through branding and quality improvements is crucial to gaining market share.
 
 ---
-
-### 📢 **Marketing & Brand Awareness**
 
 #### Which marketing channel can be used to reach more customers?
 
@@ -211,6 +223,8 @@ FROM fact_survey_responses
 GROUP BY Marketing_channels
 ORDER BY Count DESC;
 ```
+**Insight:**
+Online ads (4020) and TV commercials (2688) are the top-performing channels. Investing in digital advertising while maintaining traditional media visibility can help expand brand reach.
 
 #### How effective are different marketing strategies and channels in reaching our customers?
 
@@ -223,6 +237,8 @@ JOIN dim_respondents dr ON frs.Respondent_ID = dr.Respondent_ID
 GROUP BY Marketing_channels
 ORDER BY Total_Reach DESC;
 ```
+**Insight:**
+Online ads dominate among youth (3373), while TV commercials have a balanced reach across age groups. Outdoor billboards and print media are less effective, indicating a digital-first strategy may yield better results.
 
 ---
 
@@ -236,6 +252,8 @@ FROM fact_survey_responses
 GROUP BY Brand_perception
 ORDER BY Count DESC;
 ```
+**Insight:**
+A majority of respondents have a neutral perception (5974), suggesting low engagement. Increasing positive sentiment through improved taste, marketing, and availability is key.
 
 #### Which cities should we focus on?
 
@@ -246,6 +264,8 @@ JOIN dim_cities dc ON dc.City_ID = dr.City_ID
 GROUP BY dc.City, dc.Tier
 ORDER BY Count DESC;
 ```
+**Insight:**
+Tier 1 cities like Bangalore (2828), Hyderabad (1833), and Mumbai (1510) have the highest demand, making them priority markets. Expanding in Tier 2 cities like Pune and Kolkata could provide growth opportunities.
 
 ---
 
@@ -259,6 +279,8 @@ FROM fact_survey_responses
 GROUP BY Purchase_location
 ORDER BY Count DESC;
 ```
+**Insight:**
+Supermarkets (4494) and online retailers (2550) are the most common purchase points. Strengthening availability in these channels should be a priority.
 
 #### What factors influence purchase decisions (Price/Packaging)?
 
@@ -269,14 +291,8 @@ FROM fact_survey_responses
 GROUP BY Price_range
 ORDER BY Response_Count DESC;
 ```
-
-```sql
-SELECT Limited_edition_packaging, COUNT(Response_ID) AS Count,
-    ROUND(100 * COUNT(Response_ID) / SUM(COUNT(Response_ID)) OVER(), 2) AS Percentage
-FROM fact_survey_responses
-GROUP BY Limited_edition_packaging
-ORDER BY Count DESC;
-```
+**Insight:**
+A significant portion of respondents (40.23%) are not influenced by limited edition packaging, while 39.46% consider it. This suggests that while unique packaging can attract buyers, core factors like taste and price play a more dominant role.
 
 ---
 
@@ -290,6 +306,8 @@ FROM fact_survey_responses
 GROUP BY Brand_perception
 ORDER BY Count DESC;
 ```
+**Insight:**
+A majority of respondents (59.74%) are neutral towards the brand, indicating room for improvement in branding and marketing. 
 
 ```sql
 SELECT Taste_experience, COUNT(Response_ID) AS Count
@@ -298,8 +316,8 @@ WHERE Taste_experience IS NOT NULL
 GROUP BY Taste_experience
 ORDER BY Count DESC;
 ```
-
----
+**Insight:**
+Taste ratings are mixed, with 29.87% rating it a 3/5. Improving flavor profiles based on consumer preferences could enhance customer loyalty.
 
 ## 📌 Conclusion
 
