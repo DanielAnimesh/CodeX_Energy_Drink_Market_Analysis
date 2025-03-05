@@ -175,7 +175,7 @@ Compact and portable cans (3984) are the most preferred, followed by innovative 
 
 ---
 
-### \ud83d\udcc8 **Competition Analysis**
+### 🏆 **Competition Analysis**
 
 #### Who are the current market leaders?
 
@@ -312,6 +312,18 @@ ORDER BY Count DESC;
 ```
 **Insight:**
 Taste ratings are mixed, with 29.87% rating it a 3/5. Improving flavor profiles based on consumer preferences could enhance customer loyalty.
+---
+
+## Secondary Insights 
+
+### Recommendations for CodeX:
+1. **Improve Product Formula:** Consumers prefer caffeine and vitamins in energy drinks. CodeX should emphasize these ingredients in its branding.
+2. **Adjust Pricing Strategy:** Since price is a key decision factor, CodeX should offer a mid-tier price similar to competitors while providing occasional discounts.
+3. **Leverage Digital Marketing:** With online ads being the most effective channel, CodeX should prioritize social media campaigns, influencer collaborations, and targeted ads.
+4. **Identify Brand Ambassadors:** Given the youth audience, partnering with fitness influencers, athletes, or eSports gamers could enhance brand visibility.
+5. **Expand Distribution Channels:** Consumers prefer buying from supermarkets and online stores. Ensuring strong availability in these channels can drive sales growth.
+
+---
 
 ## 📌 Conclusion
 
